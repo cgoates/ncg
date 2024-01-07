@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<style>
+		#wrapper
+		{
+			width:100%;
+			height:100%;
+			max-width: 700px;
+			background:#F0F0F0;
+			margin:auto;
+		}
+		body
+		{
+			background:#DDE9EE url("bg.jpg");
+			height:95vh;
+		}
+		#myCanvas
+		{
+			width:100%;
+			background:#FFFFFF;
+		}
+		#head
+		{
+			/*display:block;*/
+			float:right;
+			margin-top:50px;
+			margin-bottom:30px;
+			margin-right:50px;
+		}
+		#footer{
+			width:20%;
+			min-width:100px;
+			margin:auto;
+		}
+		.scorewrap
+		{
+			margin-right:40px;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<img src="Antinoise.png" />
+			
+		<div id="head">
+			<span class="scorewrap">High Score: <span id="highscore">0 dB</span></span>
+			<button type="button" id="newgame" onclick="newAntiGame();">New Game</button>
+		</div>
+		
+		<canvas id="myCanvas" width = "700" height="300">
+			Your browser does not support the canvas element.
+		</canvas><br />
+
+		<div id="footer">
+			<input type="checkbox" id="showguide" onclick="guideCheckbox();" checked> 
+			<label for="showguide">show guide</label><br />
+		</div>
+			
+		<script src="antinoise.js"></script>
+
+
+		<script>
+			var canvas = document.getElementById("myCanvas");
+			var ctx = canvas.getContext("2d");
+
+			var anti = new antiNoise(ctx,50,0,600,250);
+
+			var over = false;
+			var latestScore;
+
+			function draw(){
+				ctx.rect(0,0,700,400);
+				ctx.fillStyle = "#F0F0F0";
+				ctx.fill();
+				ctx.beginPath();
+				ctx.rect(50,0,600,250);
+				ctx.fillStyle = "#FFFFFF";
+				ctx.fill();
+				anti.draw();
+				
+				if(over&&latestScore!=undefined)
+				{
+					/*ctx.fillStyle = "rgba(230,230,230,.7)"
+					ctx.rect(280,100,140,50);
+					ctx.fill();
+					ctx.font = "30px Comic Sans MS";
+					ctx.fillStyle = "#FF0000";
+					ctx.textAlign = "center";
+					ctx.fillText(latestScore.dB + " dB", 350, 137);*/
+					latestScore.draw(ctx,700,300);
+				}
+					
+			}
+
+			draw();
+		</script>
+		<script src="score.js"></script>
+		<script src="events.js"></script>
+	</div>
+</body>
+</html>
